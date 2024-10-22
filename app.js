@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
+const session = require('express-session');
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect("mongodb+srv://bintang:123@cluster0.hxxeo.mongodb.net/?retryWrites=true&w=majority", {
@@ -16,6 +17,13 @@ mongoose.connect("mongodb+srv://bintang:123@cluster0.hxxeo.mongodb.net/?retryWri
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: 'azuragliska',  // Anda bisa mengganti 'yourSecretKey' dengan key rahasia Anda
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Jika Anda menggunakan HTTPS, ubah menjadi true
+}));
 
 // Import routes
 const siswaRoutes = require('./routes/siswa');

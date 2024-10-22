@@ -4,7 +4,7 @@ const User = require('../models/User'); // Import model User
 
 // Route untuk menampilkan halaman login
 router.get('/login', (req, res) => {
-    res.render('login', { errorMessage: null }); // Render halaman login.ejs
+    res.render('login', { errorMessage: null });
 });
 
 // Route untuk menangani request login POST
@@ -16,21 +16,21 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ username, password });
 
         if (!user) {
-            // Jika tidak ditemukan user dengan username dan password tersebut
             return res.render('login', { errorMessage: "Username atau password salah" });
         }
 
-        // Cek role pengguna
+        // Simpan informasi user ke dalam session
+        req.session.userId = user._id;
+        req.session.role = user.role;
+
+        // Cek role pengguna dan redirect ke dashboard yang sesuai
         if (user.role === 'siswa') {
-            // Redirect ke dashboard siswa
             return res.redirect('/siswa/dashboard');
         } else if (user.role === 'guru') {
-            // Redirect ke dashboard guru
             return res.redirect('/guru/dashboard');
         } else if (user.role === 'admin') {
             return res.redirect('/admin/dashboard');
         } else {
-            // Jika role tidak dikenali (opsional)
             return res.status(400).send('Role tidak dikenali');
         }
     } catch (error) {

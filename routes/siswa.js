@@ -1,19 +1,28 @@
-// routes/siswa.js
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/student');
+const User = require('../models/User');
+const { isAuthenticated } = require('../middleware/auth');
 
-// Route for dashboard (this will be accessible at /siswa/dashboard)
-router.get('/dashboard', async (req, res) => {
-  try {
-    const students = await Student.find().sort({ rank: 1 });
-    res.render('siswa/siswa', { students });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server Error');
-  }
+// Route untuk dashboard siswa (accessible at /siswa/dashboard)
+router.get('/dashboard', isAuthenticated, async (req, res) => {
+    res.render('siswa/dashboard');
 });
 
+// Route untuk profile siswa
+router.get('/profile', isAuthenticated, async (req, res) => {
+    try {
+        // Ambil data user dari database berdasarkan session userId
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/login');
+        }
 
+        // Render halaman profile siswa dengan data user
+        res.render('siswa/siswa_profile', { user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server error');
+    }
+});
 
 module.exports = router;

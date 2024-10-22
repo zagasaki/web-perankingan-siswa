@@ -18,13 +18,15 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        gap: 50px;
+        gap: 30px;
       }
       .box {
         background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 40%;
+        height: 30%;
       }
       .ranking {
         text-align: center;
@@ -78,9 +80,10 @@
         background-color: #3b5998;
         color: #ffffff;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         padding: 10px;
         align-items: center;
+        gap: 20px;
       }
       header a {
         text-decoration: none;
@@ -89,14 +92,17 @@
         padding: 10px;
         border-radius: 5px;
       }
+      header nav a {
+        background-color: transparent;
+      }
     </style>
   </head>
   <body>
     <header>
       <nav>
-        <a href="/ranking">Ranking</a>
+        <a href="#">Ranking</a>
         <!-- Link to Ranking Page -->
-        <a href="/profile">Profile</a>
+        <a href="/siswa/profile">Profile</a>
         <!-- Link to Profile Page -->
       </nav>
       <a href="/logout">Log Out</a>
