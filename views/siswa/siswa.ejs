@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f5fc;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 50px;
+      }
+      .box {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .ranking {
+        text-align: center;
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+      }
+      .detail-score {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .score-box {
+        width: 90px;
+        height: 90px;
+        background-color: #1e88e5;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-weight: bold;
+      }
+      .ranking-table {
+        text-align: left;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #1e88e5;
+        color: #ffffff;
+      }
+      td {
+        background-color: #f2f5fc;
+      }
+      .profile-image {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+      }
+      header {
+        background-color: #3b5998;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        align-items: center;
+      }
+      header a {
+        text-decoration: none;
+        color: #ffffff;
+        background-color: red;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/ranking">Ranking</a>
+        <!-- Link to Ranking Page -->
+        <a href="/profile">Profile</a>
+        <!-- Link to Profile Page -->
+      </nav>
+      <a href="/logout">Log Out</a>
+      <!-- Link to Log Out Route -->
+    </header>
+    <div class="container">
+      <!-- Ranking Kamu Section -->
+      <div class="box">
+        <div class="ranking">32 / 100</div>
+        <div class="detail-score">
+          <div class="score-box">90<br />UTS</div>
+          <div class="score-box">90<br />UAS</div>
+          <div class="score-box">90<br />Ibadah</div>
+          <div class="score-box">90<br />Praktek</div>
+          <div class="score-box">90<br />Absensi</div>
+          <div class="score-box">90<br />Tugas</div>
+        </div>
+      </div>
+      <!-- Ranking Kelas Section -->
+      <div class="box ranking-table">
+        <h2>Peringkat Kelas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Kelas</th>
+              <th>Nama siswa</th>
+              <th>Peringkat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const siswa = [ { kelas: '7-1', nama: 'Ahmad', ranking: '1#',
+            img: '/path/to/img' }, { kelas: '7-2', nama: 'Zagasaki', ranking:
+            '2#', img: '/path/to/img' }, { kelas: '7-3', nama: 'Zhaqeus',
+            ranking: '3#', img: '/path/to/img' }, { kelas: '7-4', nama: 'Frans',
+            ranking: '4#', img: '/path/to/img' }, { kelas: '7-5', nama: 'Baja',
+            ranking: '5#', img: '/path/to/img' }, { kelas: '7-6', nama: 'Legro',
+            ranking: '2#', img: '/path/to/img' }, ]; %> <%
+            siswa.forEach(function(siswa) { %>
+            <tr>
+              <td><%= siswa.kelas %></td>
+              <td>
+                <img
+                  class="profile-image"
+                  src="<%= siswa.img %>"
+                  alt="<%= siswa.nama %>"
+                />
+                <%= siswa.nama %>
+              </td>
+              <td><%= siswa.ranking %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // Optional: Add more JavaScript functionality if needed
+    </script>
+  </body>
+</html>

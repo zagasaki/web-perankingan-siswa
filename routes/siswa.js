@@ -1,13 +1,19 @@
+// routes/siswa.js
 const express = require('express');
 const router = express.Router();
-const Siswa = require('../models/Siswa');
+const Student = require('../models/student');
 
-// Menampilkan ranking siswa
-router.get('/', (req, res) => {
-    Siswa.find().sort({ nilai: -1 }).exec((err, siswa) => {
-        if (err) return res.status(500).send(err);
-        res.render('siswa', { siswa });
-    });
+// Route for dashboard (this will be accessible at /siswa/dashboard)
+router.get('/dashboard', async (req, res) => {
+  try {
+    const students = await Student.find().sort({ rank: 1 });
+    res.render('siswa/siswa', { students });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
 });
+
+
 
 module.exports = router;
