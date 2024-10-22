@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  role: { type: String, required: true }, // 'siswa', 'guru', dll.
+  role: { type: String, required: true },
   
   // Informasi umum
   nama_lengkap: { type: String, required: false },

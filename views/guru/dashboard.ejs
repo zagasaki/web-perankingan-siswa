@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Kandidat</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #4a90e2;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        width: 60%;
+        border-radius: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+        color: #333;
+      }
+      .navbar {
+        background-color: #3a79d1;
+        padding: 10px 0;
+        text-align: right;
+        padding-right: 20px;
+      }
+      .navbar a {
+        margin-left: 15px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .logout-btn {
+        background-color: red;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .logout-btn:hover {
+        background-color: darkred;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="/guru/dashboard">Data Kandidat</a>
+      <a href="/guru/pengisian-nilai">Pengisian Nilai</a>
+      <a href="/guru/profile">Profile</a>
+      <button class="logout-btn"><a href="/logout">Log Out</a></button>
+    </div>
+
+    <div class="container">
+      <h2>Data Kandidat</h2>
+      <table>
+        <tr>
+          <th>Kelas</th>
+          <th>Nama Siswa</th>
+          <th>NISN</th>
+        </tr>
+        <% dataSiswa.forEach(function(siswa) { %>
+        <tr>
+          <td><%= siswa.kelas %></td>
+          <td><%= siswa.nama %></td>
+          <td><%= siswa.nisn %></td>
+        </tr>
+        <% }); %>
+      </table>
+    </div>
+  </body>
+</html>
