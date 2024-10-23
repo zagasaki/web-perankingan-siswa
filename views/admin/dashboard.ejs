@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Kriteria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #4a90e2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: transparent;
+            padding: 20px;
+            text-align: right;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            background-color: #DC3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 30px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            margin: 20px auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            color: #0D47A1;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .add-btn {
+            background-color: #0D47A1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .add-btn::before {
+            content: '+';
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            color: #0D47A1;
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid #E0E0E0;
+            font-weight: normal;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #0D47A1;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #DC3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/kriteria">Kriteria</a>
+        <a href="/edit-biodata">Edit Biodata</a>
+        <a href="/ranking">Ranking</a>
+        <button class="logout-btn">Log Out</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">DATA KRITERIA</h1>
+            <button class="add-btn" onclick="showAddModal()">Add</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>KODE</th>
+                    <th>KRITERIA</th>
+                    <th>BOBOT NILAI</th>
+                    <th>EDIT</th>
+                    <th>HAPUS</th>
+                </tr>
+            </thead>
+            <tbody id="criteriaTableBody">
+                <!-- Table content will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Sample data - in a real application, this would come from a database
+        let criteriaData = [
+            { kode: 'C1', kriteria: 'Rata Rata UTS', bobot: '20%' },
+            { kode: 'C1', kriteria: 'Rata Rata UAS', bobot: '25%' },
+            { kode: 'C1', kriteria: 'Nilai Ibadah', bobot: '10%' },
+            { kode: 'C1', kriteria: 'Praktek', bobot: '15%' },
+            { kode: 'C1', kriteria: 'Absensi', bobot: '15%' },
+            { kode: 'C1', kriteria: 'Rata Rata Tugas', bobot: '15%' }
+        ];
+
+        // Function to render the table
+        function renderTable() {
+            const tableBody = document.getElementById('criteriaTableBody');
+            tableBody.innerHTML = '';
+
+            criteriaData.forEach(criteria => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${criteria.kode}</td>
+                    <td>${criteria.kriteria}</td>
+                    <td>${criteria.bobot}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editCriteria('${criteria.kode}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteCriteria('${criteria.kode}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to show add modal
+        function showAddModal() {
+            const newKode = prompt('Enter Kode:');
+            const newKriteria = prompt('Enter Kriteria:');
+            const newBobot = prompt('Enter Bobot Nilai:');
+
+            if (newKode && newKriteria && newBobot) {
+                criteriaData.push({
+                    kode: newKode,
+                    kriteria: newKriteria,
+                    bobot: newBobot
+                });
+                renderTable();
+            }
+        }
+
+        // Function to edit criteria
+        function editCriteria(kode) {
+            const criteria = criteriaData.find(c => c.kode === kode);
+            if (criteria) {
+                const newKriteria = prompt('Enter new Kriteria:', criteria.kriteria);
+                const newBobot = prompt('Enter new Bobot Nilai:', criteria.bobot);
+
+                if (newKriteria && newBobot) {
+                    criteria.kriteria = newKriteria;
+                    criteria.bobot = newBobot;
+                    renderTable();
+                }
+            }
+        }
+
+        // Function to delete criteria
+        function deleteCriteria(kode) {
+            if (confirm('Are you sure you want to delete this criteria?')) {
+                criteriaData = criteriaData.filter(c => c.kode !== kode);
+                renderTable();
+            }
+        }
+
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>
