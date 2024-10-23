@@ -3,36 +3,31 @@ const router = express.Router();
 const User = require('../models/User');
 const { isAuthenticated } = require('../middleware/auth');
 
+router.use(express.json());
 
 // Route dashboard guru
-router.get('/dashboard', (req, res) => {
-    // Data siswa yang akan ditampilkan
-    const dataSiswa = [
-        { kelas: '7-1', nama: 'Asep', nisn: '1234231' },
-        { kelas: '7-1', nama: 'Budiono', nisn: '1234231' },
-        { kelas: '7-1', nama: 'Clarisa', nisn: '1234231' },
-        { kelas: '7-1', nama: 'Dempul', nisn: '1234231' },
-        { kelas: '7-1', nama: 'Empang', nisn: '1234231' },
-        { kelas: '7-1', nama: 'Ferans', nisn: '1234231' },
-    ];
+router.get('/dashboard',async (req, res) => {
 
-    // Render the 'kandidat.ejs' template and pass dataSiswa to it
-    res.render('guru/dashboard', { dataSiswa });
+    try{
+        const siswaList = await User.find({role:'siswa'});
+        res.render('guru/dashboard', { siswaList });
+    }catch (error){
+        console.log(error);
+        res.status(500).send('server error')
+    }
+
 });
 
-router.get('/pengisian-nilai', (req, res) => {
-    // Data nilai yang akan ditampilkan
-    const dataNilai = [
-        { kode: 'C1', kriteria: 'Ujian Tengah Semester', nilai: 90 },
-        { kode: 'C1', kriteria: 'Ujian Akhir Semester', nilai: 74 },
-        { kode: 'C1', kriteria: 'Nilai Ibadah', nilai: 50 },
-        { kode: 'C1', kriteria: 'Praktek', nilai: 67 },
-        { kode: 'C1', kriteria: 'Absensi', nilai: 88 },
-        { kode: 'C1', kriteria: 'Tugas', nilai: 77 }
-    ];
+router.get('/list_siswa',async (req, res) => {
+    try{
+        const siswaList = await User.find({role:'siswa'});
+        res.render('guru/list_siswa', { siswaList });
+    }catch (error){
+        console.log(error);
+        res.status(500).send('server error')
+    }
 
-    // Render the 'pengisianNilai.ejs' template and pass dataNilai to it
-    res.render('guru/pengisianNilai', { dataNilai });
+    
 });
 
 router.get('/profile',isAuthenticated, async (req, res) => {
@@ -48,4 +43,26 @@ router.get('/profile',isAuthenticated, async (req, res) => {
         res.status(500).send('profile under construction')
     }
 });
+
+router.post('/update-nilai/:id', async (req, res) => {
+    const siswaId = req.params.id;
+    const { nilai_uts, nilai_uas, nilai_ibadah, nilai_praktek, nilai_absensi, nilai_tugas } = req.body;
+  
+    try {
+      // Cari siswa berdasarkan ID dan update nilainya
+      await User.findByIdAndUpdate(siswaId, {
+        nilai_uts: nilai_uts,
+        nilai_uas: nilai_uas,
+        nilai_ibadah: nilai_ibadah,
+        nilai_praktek: nilai_praktek,
+        nilai_absensi: nilai_absensi,
+        nilai_tugas: nilai_tugas
+      });
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error updating student data:', error);
+      res.json({ success: false });
+    }
+  });
 module.exports = router;

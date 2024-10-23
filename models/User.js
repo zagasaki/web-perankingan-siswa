@@ -24,12 +24,12 @@ const userSchema = new Schema({
   alamat_orang_tua: { type: String, required: false },
   
   // Nilai siswa
-  nilai_uts: { type: Number, required: false },
-  nilai_uas: { type: Number, required: false },
-  nilai_ibadah: { type: Number, required: false },
-  nilai_praktek: { type: Number, required: false },
-  nilai_absensi: { type: Number, required: false },
-  nilai_tugas: { type: Number, required: false },
+  nilai_uts: { type: Number, required: false,default:0 },
+  nilai_uas: { type: Number, required: false,default:0 },
+  nilai_ibadah: { type: Number, required: false,default:0 },
+  nilai_praktek: { type: Number, required: false,default:0 },
+  nilai_absensi: { type: Number, required: false,default:0 },
+  nilai_tugas: { type: Number, required: false,default:0 },
 
   // Guru-specific
   nip: { type: String, required: false },

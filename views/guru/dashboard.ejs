@@ -62,7 +62,7 @@
   <body>
     <div class="navbar">
       <a href="/guru/dashboard">Data Kandidat</a>
-      <a href="/guru/pengisian-nilai">Pengisian Nilai</a>
+      <a href="/guru/list_siswa">Pengisian Nilai</a>
       <a href="/guru/profile">Profile</a>
       <button class="logout-btn"><a href="/logout">Log Out</a></button>
     </div>
@@ -75,11 +75,11 @@
           <th>Nama Siswa</th>
           <th>NISN</th>
         </tr>
-        <% dataSiswa.forEach(function(siswa) { %>
+        <% siswaList.forEach(function(siswa) { %>
         <tr>
           <td><%= siswa.kelas %></td>
-          <td><%= siswa.nama %></td>
-          <td><%= siswa.nisn %></td>
+          <td><%= siswa.nama_lengkap %></td>
+          <td><%= siswa.nis %></td>
         </tr>
         <% }); %>
       </table>
