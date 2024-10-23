@@ -100,28 +100,31 @@
   <body>
     <header>
       <nav>
-        <a href="#">Ranking</a>
-        <!-- Link to Ranking Page -->
+        <a href="/siswa/dashboard">Ranking</a>
         <a href="/siswa/profile">Profile</a>
-        <!-- Link to Profile Page -->
       </nav>
       <a href="/logout">Log Out</a>
-      <!-- Link to Log Out Route -->
     </header>
     <div class="container">
-      <!-- Ranking Kamu Section -->
       <div class="box">
         <div class="ranking">32 / 100</div>
         <div class="detail-score">
-          <div class="score-box">90<br />UTS</div>
-          <div class="score-box">90<br />UAS</div>
-          <div class="score-box">90<br />Ibadah</div>
-          <div class="score-box">90<br />Praktek</div>
-          <div class="score-box">90<br />Absensi</div>
-          <div class="score-box">90<br />Tugas</div>
+          <div class="score-box">rata-rata UTS<br /><%= user.nilai_uts %></div>
+          <div class="score-box">rata-rata UAS<br /><%= user.nilai_uas %></div>
+          <div class="score-box">
+            rata-rata Ibadah <br /><%= user.nilai_ibadah %>
+          </div>
+          <div class="score-box">
+            rata-rata Praktek <br /><%= user.nilai_praktek %>
+          </div>
+          <div class="score-box">
+            rata-rata Absensi <br /><%= user.nilai_absensi %>
+          </div>
+          <div class="score-box">
+            rata-rata Tugas <br /><%= user.nilai_tugas %>
+          </div>
         </div>
       </div>
-      <!-- Ranking Kelas Section -->
       <div class="box ranking-table">
         <h2>Peringkat Kelas</h2>
         <table>
@@ -133,34 +136,14 @@
             </tr>
           </thead>
           <tbody>
-            <% const siswa = [ { kelas: '7-1', nama: 'Ahmad', ranking: '1#',
-            img: '/path/to/img' }, { kelas: '7-2', nama: 'Zagasaki', ranking:
-            '2#', img: '/path/to/img' }, { kelas: '7-3', nama: 'Zhaqeus',
-            ranking: '3#', img: '/path/to/img' }, { kelas: '7-4', nama: 'Frans',
-            ranking: '4#', img: '/path/to/img' }, { kelas: '7-5', nama: 'Baja',
-            ranking: '5#', img: '/path/to/img' }, { kelas: '7-6', nama: 'Legro',
-            ranking: '2#', img: '/path/to/img' }, ]; %> <%
-            siswa.forEach(function(siswa) { %>
             <tr>
-              <td><%= siswa.kelas %></td>
-              <td>
-                <img
-                  class="profile-image"
-                  src="<%= siswa.img %>"
-                  alt="<%= siswa.nama %>"
-                />
-                <%= siswa.nama %>
-              </td>
-              <td><%= siswa.ranking %></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
-            <% }); %>
           </tbody>
         </table>
       </div>
     </div>
-
-    <script>
-      // Optional: Add more JavaScript functionality if needed
-    </script>
   </body>
 </html>

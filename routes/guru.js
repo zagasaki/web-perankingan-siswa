@@ -5,7 +5,6 @@ const { isAuthenticated } = require('../middleware/auth');
 
 router.use(express.json());
 
-// Route dashboard guru
 router.get('/dashboard',async (req, res) => {
 
     try{
@@ -26,7 +25,6 @@ router.get('/list_siswa',async (req, res) => {
         console.log(error);
         res.status(500).send('server error')
     }
-
     
 });
 
@@ -40,7 +38,7 @@ router.get('/profile',isAuthenticated, async (req, res) => {
         res.render('guru/profile',{user});
     }catch(error){
         console.log(error);
-        res.status(500).send('profile under construction')
+        res.status(500).send('server error')
     }
 });
 

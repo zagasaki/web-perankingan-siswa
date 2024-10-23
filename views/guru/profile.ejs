@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #4a90e2;
+        color: #333;
+        margin: 0;
+      }
+
+      .navbar {
+        background-color: #3a79d1;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20px;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        margin-left: 15px;
+      }
+
+      .logout-btn {
+        background-color: red;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background-color: darkred;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-header img {
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        margin-right: 20px;
+      }
+
+      .profile-header h2 {
+        font-size: 1.8rem;
+        color: #333;
+      }
+
+      .profile-header span {
+        display: block;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .details .card {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .details .card label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .details .card p {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>
+        <a href="/guru/dashboard">Data Kandidat</a>
+        <a href="/guru/list_siswa">Pengisian Nilai</a>
+        <a href="/guru/profile">Profile</a>
+      </div>
+      <button class="logout-btn"><a href="/logout">Log Out</a></button>
+    </div>
+
+    <div class="container">
+      <div class="profile-header">
+        <img src="/images/profile.jpg" alt="Profile Picture" />
+        <div>
+          <h2><%= user.nama_lengkap %></h2>
+          <span>NIP: <%= user.nip %></span>
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="card">
+          <label>Nama Lengkap</label>
+          <p><%= user.nama_lengkap %></p>
+        </div>
+        <div class="card">
+          <label>Alamat</label>
+          <p><%= user.alamat %></p>
+        </div>
+        <div class="card">
+          <label>Jenis Kelamin</label>
+          <p><%= user.jenis_kelamin %></p>
+        </div>
+        <div class="card">
+          <label>Telepon</label>
+          <p><%= user.telepon %></p>
+        </div>
+        <div class="card">
+          <label>Tempat Tanggal Lahir</label>
+          <p><%= user.tempat_tanggal_lahir %></p>
+        </div>
+        <div class="card">
+          <label>Mata Pelajaran</label>
+          <p><%= user.mata_pelajaran %></p>
+        </div>
+        <div class="card">
+          <label>Agama</label>
+          <p><%= user.agama %></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
