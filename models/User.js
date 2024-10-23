@@ -13,6 +13,7 @@ const userSchema = new Schema({
   tempat_tanggal_lahir: { type: String, required: false },
   telepon: { type: String, required: false },
   alamat: { type: String, required: false },
+  foto_profile:{type:String,required:false},
   
   // Siswa-specific
   nis: { type: String, required: false },
@@ -22,6 +23,7 @@ const userSchema = new Schema({
   pekerjaan_ayah: { type: String, required: false },
   pekerjaan_ibu: { type: String, required: false },
   alamat_orang_tua: { type: String, required: false },
+  kelas:{type:String,required:false},
   
   // Nilai siswa
   nilai_uts: { type: Number, required: false,default:0 },
