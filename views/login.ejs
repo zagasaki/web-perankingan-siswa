@@ -1,92 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #3b5998;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      .login-container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 500px;
-      }
-      h2 {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      input[type="text"],
-      input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #0056b3;
-      }
-      .remember-me {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .remember-me input {
-        margin-right: 10px;
-      }
-      .captcha {
-        font-size: 12px;
-        color: #777;
-        text-align: center;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #3b82f6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-title {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #4b5563;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-field .hide-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+
+        .remember-me label {
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .login-btn:hover {
+            background-color: #004494;
+        }
+
+        .captcha-notice {
+            margin-top: 16px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .captcha-notice a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .captcha-notice a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 14px;
+            margin-bottom: 16px;
+            text-align: center;
+            background-color: #fee2e2;
+            padding: 8px;
+            border-radius: 4px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="login-container">
-      <h2>Login</h2>
-      <% if (errorMessage) { %>
-      <script>
-        alert("<%= errorMessage %>");
-      </script>
-      <% } %>
-      <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" required />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <div class="remember-me">
-          <input type="checkbox" name="remember" id="remember" />
-          <label for="remember">Remember me</label>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p class="captcha">
-        This page is protected by Google reCAPTCHA to ensure you're not a bot.
-        <a href="#">Learn more</a>.
-      </p>
+        <h1 class="login-title">Login</h1>
+        
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+            <div class="error-message">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    placeholder="Username"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-field">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        placeholder="Password"
+                    >
+                    <button type="button" class="hide-btn" onclick="togglePassword()">
+                        Hide
+                    </button>
+                </div>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Remember me</label>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <p class="captcha-notice">
+            This page is protected by Google reCAPTCHA<br>
+            to ensure you're not a bot. <a href="#">Learn more</a>.
+        </p>
     </div>
-  </body>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const hideButton = document.querySelector('.hide-btn');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                hideButton.textContent = 'Show';
+            } else {
+                passwordInput.type = 'password';
+                hideButton.textContent = 'Hide';
+            }
+        }
+    </script>
+</body>
 </html>
