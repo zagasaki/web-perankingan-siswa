@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata Siswa dan Guru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #4a90e2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: transparent;
+            padding: 20px;
+            text-align: right;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            background-color: #DC3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 30px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .biodata-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 45%;
+        }
+
+        .biodata-section h2 {
+            text-align: center;
+            color: #0D47A1;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            color: #0D47A1;
+        }
+
+        .edit-btn {
+            background-color: #0D47A1;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .biodata-section {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/ranking">Ranking</a>
+        <a href="/profile">Profile</a>
+        <button class="logout-btn">Log Out</button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Biodata Siswa Section -->
+        <div class="biodata-section">
+            <h2>BIODATA SISWA</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kelas</th>
+                        <th>Nama Siswa</th>
+                        <th>Edit</th>
+                        <th>NISN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% students.forEach(function(student) { %>
+                        <tr>
+                            <td><%= student.kelas %></td>
+                            <td><%= student.nama %></td>
+                            <td>
+                                <button class="edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                            <td><%= student.nisn %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Biodata Guru Section -->
+        <div class="biodata-section">
+            <h2>BIODATA GURU</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Siswa</th>
+                        <th>Edit</th>
+                        <th>NISN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% teachers.forEach(function(teacher, index) { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= teacher.nama %></td>
+                            <td>
+                                <button class="edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                            <td><%= teacher.nisn %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
