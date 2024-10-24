@@ -52,15 +52,15 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-app.use(helmet({
-    contentSecurityPolicy: {
-      directives: {
-        "default-src": ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "https://vercel.live"],
-        "connect-src": ["'self'", "https://vercel.live"]
-      }
-    }
-  }));
+// app.use(helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         "default-src": ["'self'"],
+//         "script-src": ["'self'", "'unsafe-inline'", "https://vercel.live"],
+//         "connect-src": ["'self'", "https://vercel.live"]
+//       }
+//     }
+//   }));
   
 
 module.exports = app;
