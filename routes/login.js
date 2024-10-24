@@ -3,7 +3,15 @@ const router = express.Router();
 const User = require('../models/User');
 
 function redirectBasedOnRole(req, res) {
-
+    if (req.session.role === 'siswa') {
+        return res.redirect('/siswa/dashboard');
+    } else if (req.session.role === 'guru') {
+        return res.redirect('/guru/dashboard');
+    } else if (req.session.role === 'admin') {
+        return res.redirect('/admin/dashboard');
+    } else {
+        return res.status(400).send('Role tidak dikenali');
+    }
 }
 router.get('/login', (req, res) => {
     if (req.session.userId) {
