@@ -47,20 +47,8 @@ app.use('/guru', guruRoutes);
 app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
 
-// Default route
-app.get('/', (req, res) => {
-    res.redirect('views/login');
-});
-
-// app.use(helmet({
-//     contentSecurityPolicy: {
-//       directives: {
-//         "default-src": ["'self'"],
-//         "script-src": ["'self'", "'unsafe-inline'", "https://vercel.live"],
-//         "connect-src": ["'self'", "https://vercel.live"]
-//       }
-//     }
-//   }));
-  
+app.get('/', (req,res)=>{
+    res.send("bintang ganteng")
+})
 
 module.exports = app;
