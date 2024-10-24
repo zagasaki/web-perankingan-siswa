@@ -41,7 +41,7 @@ const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 
 // Use routes
-app.use('/login', loginRoutes);
+app.use('/', loginRoutes);
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
 app.use('/admin', adminRoutes);
