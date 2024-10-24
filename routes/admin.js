@@ -16,7 +16,6 @@ router.get('/dashboard',isAuthenticated,async (req, res) => {
     }
 });
 
-
 router.get('/editbiodata',isAuthenticated,async(req,res)=>{
     try {
         const user = await User.findById(req.session.userId);

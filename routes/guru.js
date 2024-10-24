@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Ranking = require('../models/Ranking')
 const { isAuthenticated } = require('../middleware/auth');
 
 router.use(express.json());
@@ -47,7 +48,6 @@ router.post('/update-nilai/:id', async (req, res) => {
     const { nilai_uts, nilai_uas, nilai_ibadah, nilai_praktek, nilai_absensi, nilai_tugas } = req.body;
   
     try {
-      // Cari siswa berdasarkan ID dan update nilainya
       await User.findByIdAndUpdate(siswaId, {
         nilai_uts: nilai_uts,
         nilai_uas: nilai_uas,
@@ -63,4 +63,12 @@ router.post('/update-nilai/:id', async (req, res) => {
       res.json({ success: false });
     }
   });
+
+router.post('/push-ranking-data',async (req, res) => {
+    const rankingData = req.body;
+    
+    await Ranking.insertMany(rankingData)
+      .then(() => res.json({ success: true }))
+      .catch(err => res.json({ success: false, error: err.message }));
+    });
 module.exports = router;

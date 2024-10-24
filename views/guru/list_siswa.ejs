@@ -113,6 +113,9 @@
         <div class="columns">
           <div class="column is-full">
             <h1 class="title">Data Kandidat</h1>
+            <div class="rankingbutton">
+              <button id="pushDataButton">Push Data</button>
+            </div>
             <table class="table is-fullwidth is-striped">
               <thead>
                 <tr>
@@ -297,6 +300,50 @@
                 location.reload();
               } else {
                 alert("Failed to update data.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+      ///////////////////////////////////////////////////////////////
+      document
+        .getElementById("pushDataButton")
+        .addEventListener("click", function () {
+          const rows = document.querySelectorAll("tbody tr");
+          const rankingData = [];
+
+          rows.forEach((row) => {
+            const cells = row.querySelectorAll("td");
+            const siswa = {
+              kelas: cells[0].innerText,
+              nama: cells[1].innerText,
+              nilai_uts: parseFloat(cells[2].innerText) || 0,
+              nilai_uas: parseFloat(cells[3].innerText) || 0,
+              nilai_ibadah: parseFloat(cells[4].innerText) || 0,
+              nilai_praktek: parseFloat(cells[5].innerText) || 0,
+              nilai_absensi: parseFloat(cells[6].innerText) || 0,
+              nilai_tugas: parseFloat(cells[7].innerText) || 0,
+              nisn: cells[8].innerText,
+            };
+            rankingData.push(siswa);
+          });
+
+          fetch("/guru/push-ranking-data", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(rankingData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                alert(
+                  "Data has been successfully pushed to the ranking collection!"
+                );
+              } else {
+                alert("Failed to push data.");
               }
             })
             .catch((error) => {

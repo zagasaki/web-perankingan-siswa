@@ -137,23 +137,23 @@
         </div>
         <div class="scores-grid">
           <div class="score-item">
-            <div class="score-circle">90</div>
+            <div class="score-circle"><%= user.nilai_uts %></div>
             <span>UTS</span>
           </div>
           <div class="score-item">
-            <div class="score-circle">90</div>
+            <div class="score-circle"><%= user.nilai_uas %></div>
             <span>UAS</span>
           </div>
           <div class="score-item">
-            <div class="score-circle">90</div>
+            <div class="score-circle"><%= user.nilai_ibadah %></div>
             <span>Ibadah</span>
           </div>
           <div class="score-item">
-            <div class="score-circle">90</div>
+            <div class="score-circle"><%= user.nilai_praktek %></div>
             <span>Praktek</span>
           </div>
           <div class="score-item">
-            <div class="score-circle">90</div>
+            <div class="score-circle"><%= user.nilai_absensi %></div>
             <span>Absensi</span>
           </div>
           <div class="score-item">
@@ -165,30 +165,27 @@
 
       <!-- Right Card - Class Ranking -->
       <div class="card">
-        <h2 class="ranking-title">PERINGKAT KELAS</h2>
-        <table class="class-table">
-          <thead>
-            <tr>
-              <th>Kelas</th>
-              <th>Nama siswa</th>
-              <th>Peringkat</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% const students = [ { kelas: '7-1', nama: 'Siti Aisyah',
-            peringkat: '1#' }, { kelas: '7-2', nama: 'Muhammad Ravin',
-            peringkat: '2#' }, { kelas: '7-3', nama: 'Aziz Pratama', peringkat:
-            '3#' }, { kelas: '7-4', nama: 'Balqis', peringkat: '4#' }, { kelas:
-            '7-5', nama: 'Khairani', peringkat: '5#' } ] %> <%
-            students.forEach(function(student) { %>
-            <tr>
-              <td><%= student.kelas %></td>
-              <td><%= student.nama %></td>
-              <td><%= student.peringkat %></td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
+        <div class="card">
+          <h2 class="ranking-title">PERINGKAT KELAS</h2>
+          <table class="class-table">
+            <thead>
+              <tr>
+                <th>Kelas</th>
+                <th>Nama Siswa</th>
+                <th>Peringkat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(function(student, index) { %>
+              <tr>
+                <td><%= student.kelas %></td>
+                <td><%= student.nama %></td>
+                <td><%= index + 1 %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </body>

@@ -5,6 +5,7 @@ const app = express();
 const session = require('express-session');
 const PORT = process.env.PORT || 3000;
 
+
 mongoose.connect("mongodb+srv://bintang:123@cluster0.hxxeo.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -17,6 +18,7 @@ mongoose.connect("mongodb+srv://bintang:123@cluster0.hxxeo.mongodb.net/?retryWri
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 
 app.use(session({
     secret: 'azuragliska',  // Anda bisa mengganti 'yourSecretKey' dengan key rahasia Anda
@@ -33,9 +35,11 @@ const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 
 
+
 // Gunakan routes
 app.use(loginRoutes);
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
 app.use('/admin',adminRoutes)
 app.use('/logout', logoutRoutes);
+
