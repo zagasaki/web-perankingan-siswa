@@ -1,193 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Profile</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #4a90e2;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #4a90e2;
+        margin: 0;
+        padding: 0;
+      }
 
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            padding: 15px 30px;
-            align-items: center;
-            gap: 20px;
-        }
+      .header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px 30px;
+        align-items: center;
+        gap: 20px;
+      }
 
-        .header a {
-            color: white;
-            text-decoration: none;
-        }
+      .header a {
+        color: white;
+        text-decoration: none;
+      }
 
-        .logout-btn {
-            background-color: #dc3545;
-            padding: 8px 16px;
-            border-radius: 5px;
+      .logout-btn {
+        background-color: #dc3545;
+        padding: 8px 16px;
+        border-radius: 5px;
+      }
+
+      .profile-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        padding: 20px;
+      }
+
+      .profile-avatar {
+        width: 60px;
+        height: 60px;
+        background-color: #ffd700;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+      }
+
+      .profile-name {
+        font-size: 24px;
+        color: #333;
+      }
+
+      .profile-nis {
+        color: #666;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .info-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .info-label {
+        color: #0d47a1;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .info-value {
+        color: #666;
+        font-size: 14px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .info-grid {
+          grid-template-columns: 1fr;
         }
 
         .profile-container {
-            max-width: 1200px;
-            margin: 20px auto;
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
+          margin: 10px;
+          padding: 15px;
         }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
-            padding: 20px;
-        }
-
-        .profile-avatar {
-            width: 60px;
-            height: 60px;
-            background-color: #ffd700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-        }
-
-        .profile-name {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .profile-nis {
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .info-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-label {
-            color: #0d47a1;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .info-value {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-container {
-                margin: 10px;
-                padding: 15px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <a href="/siswa/dashboard">Ranking</a>
-        <a href="/siswa/profile">Profile</a>
-        <a href="/logout" class="logout-btn">Log Out</a>
+      <a href="/siswa/dashboard">Ranking</a>
+      <a href="/siswa/profile">Profile</a>
+      <a href="/" class="logout-btn">Log Out</a>
     </div>
 
     <div class="profile-container">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-            <div>
-                <div class="profile-name"><%= user.nama_lengkap %></div>
-                <div class="profile-nis">Nis. <%= user.nis %></div>
-            </div>
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div>
+          <div class="profile-name"><%= user.nama_lengkap %></div>
+          <div class="profile-nis">Nis. <%= user.nis %></div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-label">Nama Lengkap</div>
+          <div class="info-value"><%= user.nama_lengkap %></div>
         </div>
 
-        <div class="info-grid">
-            <div class="info-card">
-                <div class="info-label">Nama Lengkap</div>
-                <div class="info-value"><%= user.nama_lengkap %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Alamat</div>
-                <div class="info-value"><%= user.alamat %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Pekerjaan Ibu</div>
-                <div class="info-value"><%= user.pekerjaan_ibu %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Jenis Kelamin</div>
-                <div class="info-value"><%= user.jenis_kelamin %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Telepon</div>
-                <div class="info-value"><%= user.telepon %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Pekerjaan Ayah</div>
-                <div class="info-value"><%= user.pekerjaan_ayah %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Tempat Tanggal Lahir</div>
-                <div class="info-value"><%= user.tempat_tanggal_lahir %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Nama Ayah</div>
-                <div class="info-value"><%= user.nama_ayah %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Agama</div>
-                <div class="info-value"><%= user.agama %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Nama Ibu</div>
-                <div class="info-value"><%= user.nama_ibu %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Anak Ke</div>
-                <div class="info-value"><%= user.anak_ke %></div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-label">Alamat Ortu</div>
-                <div class="info-value"><%= user.alamat_orang_tua %></div>
-            </div>
+        <div class="info-card">
+          <div class="info-label">Alamat</div>
+          <div class="info-value"><%= user.alamat %></div>
         </div>
+
+        <div class="info-card">
+          <div class="info-label">Pekerjaan Ibu</div>
+          <div class="info-value"><%= user.pekerjaan_ibu %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Jenis Kelamin</div>
+          <div class="info-value"><%= user.jenis_kelamin %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Telepon</div>
+          <div class="info-value"><%= user.telepon %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Pekerjaan Ayah</div>
+          <div class="info-value"><%= user.pekerjaan_ayah %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Tempat Tanggal Lahir</div>
+          <div class="info-value"><%= user.tempat_tanggal_lahir %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Nama Ayah</div>
+          <div class="info-value"><%= user.nama_ayah %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Agama</div>
+          <div class="info-value"><%= user.agama %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Nama Ibu</div>
+          <div class="info-value"><%= user.nama_ibu %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Anak Ke</div>
+          <div class="info-value"><%= user.anak_ke %></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-label">Alamat Ortu</div>
+          <div class="info-value"><%= user.alamat_orang_tua %></div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
