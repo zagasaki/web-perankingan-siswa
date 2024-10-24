@@ -49,7 +49,7 @@ app.use('/logout', logoutRoutes);
 
 // Default route
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    res.redirect('views/login');
 });
 
 // app.use(helmet({
