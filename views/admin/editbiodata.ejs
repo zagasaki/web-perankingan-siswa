@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Biodata</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #0d47a1;
+        font-size: 24px;
+      }
+
+      .field {
+        margin-bottom: 15px;
+      }
+
+      .label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .control .input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #0d47a1;
+        color: white;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .button.cancel {
+        background-color: #dc3545;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Edit Biodata <%= role === 'siswa' ? 'Siswa' : 'Guru' %></h2>
+      <form id="editForm">
+        <div class="field">
+          <label class="label">Nama Lengkap</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              id="nama_lengkap"
+              value="<%= user.nama_lengkap %>"
+            />
+          </div>
+        </div>
+
+        <% if (role === 'siswa') { %>
+        <div class="field">
+          <label class="label">Kelas</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              id="kelas"
+              value="<%= user.kelas %>"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Nama Ayah</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              id="nama_ayah"
+              value="<%= user.nama_ayah %>"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Nama Ibu</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              id="nama_ibu"
+              value="<%= user.nama_ibu %>"
+            />
+          </div>
+        </div>
+        <% } else if (role === 'guru') { %>
+        <div class="field">
+          <label class="label">Mata Pelajaran</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              id="mata_pelajaran"
+              value="<%= user.mata_pelajaran %>"
+            />
+          </div>
+        </div>
+        <% } %>
+
+        <button class="button" type="submit">Save Changes</button>
+        <button
+          class="button cancel"
+          type="button"
+          onclick="window.location.href='/admin/editbiodata';"
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("editForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const data = {
+            nama_lengkap: document.getElementById("nama_lengkap").value,
+            kelas: document.getElementById("kelas")
+              ? document.getElementById("kelas").value
+              : null,
+            nama_ayah: document.getElementById("nama_ayah")
+              ? document.getElementById("nama_ayah").value
+              : null,
+            nama_ibu: document.getElementById("nama_ibu")
+              ? document.getElementById("nama_ibu").value
+              : null,
+            mata_pelajaran: document.getElementById("mata_pelajaran")
+              ? document.getElementById("mata_pelajaran").value
+              : null,
+          };
+
+          fetch(`/admin/update-biodata/<%= user._id %>`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.success) {
+                alert("Biodata updated successfully");
+                window.location.href = "/admin/editbiodata";
+              } else {
+                alert("Failed to update biodata");
+              }
+            })
+            .catch((error) =>
+              console.error("Error updating user data:", error)
+            );
+        });
+    </script>
+  </body>
+</html>

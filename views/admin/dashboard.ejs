@@ -118,20 +118,66 @@
         background-color: #dc3545;
         color: white;
       }
+
+      /* Floating Form */
+      .floating-form {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        z-index: 1000;
+        width: 300px;
+      }
+
+      .floating-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      .floating-form button {
+        background-color: #0d47a1;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .floating-form .close-btn {
+        background-color: #dc3545;
+        margin-left: 10px;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
     </style>
   </head>
   <body>
     <div class="navbar">
       <a href="/admin/dashboard">Kriteria</a>
-      <a href="/admin/editbiodata">Edit Biodata</a>
-      <a href="/ranking">Ranking</a>
-      <button class="logout-btn">Log Out</button>
+      <a href="/admin/listSiswaGuru">Edit Biodata</a>
+      <button class="logout-btn"><a href="/logout">Log Out</a></button>
     </div>
 
     <div class="container">
       <div class="header">
         <h1 class="title">DATA KRITERIA</h1>
-        <button class="add-btn" onclick="showAddModal()">Add</button>
       </div>
 
       <table>
@@ -139,9 +185,10 @@
           <tr>
             <th>KODE</th>
             <th>KRITERIA</th>
-            <th>BOBOT NILAI</th>
-            <th>EDIT</th>
-            <th>HAPUS</th>
+            <th>BOBOT NILAI(%)</th>
+            <th>
+              <button class="edit-btn" onclick="openEditForm()">Edit</button>
+            </th>
           </tr>
         </thead>
         <tbody id="criteriaTableBody">
@@ -150,79 +197,126 @@
       </table>
     </div>
 
+    <div class="overlay" id="overlay"></div>
+
+    <div class="floating-form" id="editForm">
+      <h3>Edit Bobot</h3>
+      <input type="number" id="editC1" placeholder="Bobot C1 (%)" step="0.01" />
+      <input type="number" id="editC2" placeholder="Bobot C2 (%)" step="0.01" />
+      <input type="number" id="editC3" placeholder="Bobot C3 (%)" step="0.01" />
+      <input type="number" id="editC4" placeholder="Bobot C4 (%)" step="0.01" />
+      <input type="number" id="editC5" placeholder="Bobot C5 (%)" step="0.01" />
+      <input type="number" id="editC6" placeholder="Bobot C6 (%)" step="0.01" />
+      <button onclick="saveChanges()">Save</button>
+      <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+
     <script>
       // Sample data - in a real application, this would come from a database
-      let criteriaData = [
-        { kode: "C1", kriteria: "Rata Rata UTS", bobot: "20%" },
-        { kode: "C1", kriteria: "Rata Rata UAS", bobot: "25%" },
-        { kode: "C1", kriteria: "Nilai Ibadah", bobot: "10%" },
-        { kode: "C1", kriteria: "Praktek", bobot: "15%" },
-        { kode: "C1", kriteria: "Absensi", bobot: "15%" },
-        { kode: "C1", kriteria: "Rata Rata Tugas", bobot: "15%" },
-      ];
+      let criteriaData = {
+        c1: "<%= bobot.c1 * 100 %>",
+        c2: "<%= bobot.c2 * 100 %>",
+        c3: "<%= bobot.c3 * 100 %>",
+        c4: "<%= bobot.c4 * 100 %>",
+        c5: "<%= bobot.c5 * 100 %>",
+        c6: "<%= bobot.c6 * 100 %>",
+      };
 
       // Function to render the table
       function renderTable() {
         const tableBody = document.getElementById("criteriaTableBody");
         tableBody.innerHTML = "";
 
-        criteriaData.forEach((criteria) => {
+        const criteriaList = [
+          { code: "C1", name: "Rata Rata UAS", value: criteriaData.c1 },
+          { code: "C2", name: "Rata Rata UTS", value: criteriaData.c2 },
+          { code: "C3", name: "Rata Rata Tugas", value: criteriaData.c3 },
+          { code: "C4", name: "Absensi", value: criteriaData.c4 },
+          { code: "C5", name: "Praktek", value: criteriaData.c5 },
+          { code: "C6", name: "Nilai Ibadah", value: criteriaData.c6 },
+        ];
+
+        criteriaList.forEach((criteria) => {
           const row = document.createElement("tr");
           row.innerHTML = `
-                    <td>${criteria.kode}</td>
-                    <td>${criteria.kriteria}</td>
-                    <td>${criteria.bobot}</td>
-                    <td>
-                        <button class="edit-btn" onclick="editCriteria('${criteria.kode}')">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="delete-btn" onclick="deleteCriteria('${criteria.kode}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
+                <td>${criteria.code}</td>
+                <td>${criteria.name}</td>
+                <td>${criteria.value}</td>
+                <td></td>
+            `;
           tableBody.appendChild(row);
         });
       }
 
-      // Function to show add modal
-      function showAddModal() {
-        const newKode = prompt("Enter Kode:");
-        const newKriteria = prompt("Enter Kriteria:");
-        const newBobot = prompt("Enter Bobot Nilai:");
-
-        if (newKode && newKriteria && newBobot) {
-          criteriaData.push({
-            kode: newKode,
-            kriteria: newKriteria,
-            bobot: newBobot,
-          });
-          renderTable();
-        }
+      // Function to open the edit form
+      function openEditForm() {
+        document.getElementById("editC1").value = criteriaData.c1;
+        document.getElementById("editC2").value = criteriaData.c2;
+        document.getElementById("editC3").value = criteriaData.c3;
+        document.getElementById("editC4").value = criteriaData.c4;
+        document.getElementById("editC5").value = criteriaData.c5;
+        document.getElementById("editC6").value = criteriaData.c6;
+        document.getElementById("editForm").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
       }
 
-      // Function to edit criteria
-      function editCriteria(kode) {
-        const criteria = criteriaData.find((c) => c.kode === kode);
-        if (criteria) {
-          const newKriteria = prompt("Enter new Kriteria:", criteria.kriteria);
-          const newBobot = prompt("Enter new Bobot Nilai:", criteria.bobot);
+      // Function to close the edit form
+      function closeForm() {
+        document.getElementById("editForm").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
 
-          if (newKriteria && newBobot) {
-            criteria.kriteria = newKriteria;
-            criteria.bobot = newBobot;
-            renderTable();
+      // Function to save changes and update in the database
+      async function saveChanges() {
+        const newC1 = parseFloat(document.getElementById("editC1").value);
+        const newC2 = parseFloat(document.getElementById("editC2").value);
+        const newC3 = parseFloat(document.getElementById("editC3").value);
+        const newC4 = parseFloat(document.getElementById("editC4").value);
+        const newC5 = parseFloat(document.getElementById("editC5").value);
+        const newC6 = parseFloat(document.getElementById("editC6").value);
+
+        if (
+          !isNaN(newC1) &&
+          !isNaN(newC2) &&
+          !isNaN(newC3) &&
+          !isNaN(newC4) &&
+          !isNaN(newC5) &&
+          !isNaN(newC6)
+        ) {
+          criteriaData = {
+            c1: newC1,
+            c2: newC2,
+            c3: newC3,
+            c4: newC4,
+            c5: newC5,
+            c6: newC6,
+          };
+          renderTable();
+          closeForm();
+
+          // Update in the database
+          try {
+            const response = await fetch(`/admin/updateBobot`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                c1: newC1 / 100,
+                c2: newC2 / 100,
+                c3: newC3 / 100,
+                c4: newC4 / 100,
+                c5: newC5 / 100,
+                c6: newC6 / 100,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Failed to update the database");
+            }
+          } catch (error) {
+            console.error("Error updating the database:", error);
           }
-        }
-      }
-
-      // Function to delete criteria
-      function deleteCriteria(kode) {
-        if (confirm("Are you sure you want to delete this criteria?")) {
-          criteriaData = criteriaData.filter((c) => c.kode !== kode);
-          renderTable();
         }
       }
 

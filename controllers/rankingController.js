@@ -1,16 +1,55 @@
 // controllers/rankingController.js
-const Ranking = require('../models/Ranking'); // Update to use the Ranking model
+const Bobot = require('../models/bobot');
 
-const weights = {
-    nilai_uas: 0.25,
-    nilai_uts: 0.2,
-    nilai_tugas: 0.15,
-    nilai_absensi: 0.15,
-    nilai_praktek: 0.1,
-    nilai_ibadah: 0.15,
-};
+// Fungsi untuk mendapatkan bobot dari database
+async function getWeights() {
+    try {
+        // Mengambil data bobot pertama (asumsi hanya ada satu)
+        const bobot = await Bobot.findOne();
+        if (!bobot) {
+            throw new Error('Bobot tidak ditemukan di database.');
+        }
 
-// Normalize scores function
+        return {
+            nilai_uts: bobot.c1,
+            nilai_uas: bobot.c2,
+            nilai_tugas: bobot.c3,
+            nilai_absensi: bobot.c4,
+            nilai_praktek: bobot.c5,
+            nilai_ibadah: bobot.c6,
+        };
+    } catch (error) {
+        console.error('Error fetching weights:', error);
+        throw error; // Lanjutkan error agar bisa ditangani oleh caller
+    }
+}
+
+// Fungsi untuk menghitung nilai akhir
+async function calculateFinalScores(students) {
+    try {
+        const weights = await getWeights();
+
+        return students.map(student => {
+            const finalScore =
+                (student.normalizedScores.nilai_uts * weights.nilai_uts) +
+                (student.normalizedScores.nilai_uas * weights.nilai_uas) +
+                (student.normalizedScores.nilai_ibadah * weights.nilai_ibadah) +
+                (student.normalizedScores.nilai_praktek * weights.nilai_praktek) +
+                (student.normalizedScores.nilai_absensi * weights.nilai_absensi) +
+                (student.normalizedScores.nilai_tugas * weights.nilai_tugas);
+
+            return {
+                ...student,
+                finalScore
+            };
+        });
+    } catch (error) {
+        console.error('Error calculating final scores:', error);
+        throw error; // Lanjutkan error agar bisa ditangani oleh caller
+    }
+}
+
+// Fungsi normalisasi tetap sama
 function normalizeScores(students) {
     const maxScores = {
         nilai_uts: Math.max(...students.map(student => student.nilai_uts)),
@@ -34,25 +73,7 @@ function normalizeScores(students) {
     }));
 }
 
-// Calculate final scores function
-function calculateFinalScores(students) {
-    return students.map(student => {
-        const finalScore = 
-            (student.normalizedScores.nilai_uts * weights.nilai_uts) +
-            (student.normalizedScores.nilai_uas * weights.nilai_uas) +
-            (student.normalizedScores.nilai_ibadah * weights.nilai_ibadah) +
-            (student.normalizedScores.nilai_praktek * weights.nilai_praktek) +
-            (student.normalizedScores.nilai_absensi * weights.nilai_absensi) +
-            (student.normalizedScores.nilai_tugas * weights.nilai_tugas);
-
-        return {
-            ...student,
-            finalScore
-        };
-    });
-}
-
-// Rank students function
+// Fungsi ranking tetap sama
 function rankStudents(students) {
     return students.sort((a, b) => b.finalScore - a.finalScore);
 }

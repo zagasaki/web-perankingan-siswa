@@ -21,14 +21,14 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
         // Fetch and rank students
         const students = await Ranking.find(); // Fetch data from Ranking model
         const normalizedStudents = normalizeScores(students);
-        const studentsWithScores = calculateFinalScores(normalizedStudents);
+        const studentsWithScores =await calculateFinalScores(normalizedStudents);
         const rankedStudents = rankStudents(studentsWithScores);
 
         // Render the dashboard view with user and ranked students
         res.render('siswa/dashboard', { user, students: rankedStudents });
     } catch (error) {
         console.error('Error in /dashboard route:', error);
-        res.status(500).send('kontol');
+        res.status(500).send('Server error');
     }
 });
 
@@ -43,7 +43,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         // Fetch and rank students for the profile view
         const students = await Ranking.find(); // Fetch data from Ranking model
         const normalizedStudents = normalizeScores(students);
-        const studentsWithScores = calculateFinalScores(normalizedStudents);
+        const studentsWithScores = await calculateFinalScores(normalizedStudents);
         const rankedStudents = rankStudents(studentsWithScores);
 
         res.render('siswa/siswa_profile', { user, students: rankedStudents });

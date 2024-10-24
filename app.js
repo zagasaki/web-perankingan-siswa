@@ -21,10 +21,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.use(session({
-    secret: 'azuragliska',  // Anda bisa mengganti 'yourSecretKey' dengan key rahasia Anda
+    secret: 'azuragliska',  
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }  // Jika Anda menggunakan HTTPS, ubah menjadi true
+    cookie: { secure: false } 
 }));
 
 // Import routes
