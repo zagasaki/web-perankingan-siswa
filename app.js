@@ -1,30 +1,36 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const app = express();
 const session = require('express-session');
+const dotenv = require('dotenv');
+const path = require('path');
+
+dotenv.config();
+
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-
+// MongoDB Connection
 mongoose.connect("mongodb+srv://bintang:123@cluster0.hxxeo.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    app.listen(PORT, () => {
-        console.log(`Database connected \nServer running on port: ${PORT}`);
-    });
-}).catch(err => console.log(err));
+    console.log("Database connected");
+}).catch(err => console.error("Database connection error: ", err));
 
+// Set up view engine and static files
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(session({
-    secret: 'azuragliska',  
+    secret: 'azuragliska',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } 
+    cookie: { secure: false } // Use secure: true if using HTTPS
 }));
 
 // Import routes
@@ -34,12 +40,27 @@ const adminRoutes = require('./routes/admin');
 const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 
-
-
-// Gunakan routes
-app.use(loginRoutes);
+// Use routes
+app.use('/login', loginRoutes);
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
-app.use('/admin',adminRoutes)
+app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
 
+// Default route
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
+app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'", "https://vercel.live"],
+        "connect-src": ["'self'", "https://vercel.live"]
+      }
+    }
+  }));
+  
+
+module.exports = app;
