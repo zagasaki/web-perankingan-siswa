@@ -37,18 +37,16 @@ app.use(session({
 const siswaRoutes = require('./routes/siswa');
 const guruRoutes = require('./routes/guru');
 const adminRoutes = require('./routes/admin');
-const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 
 // Use routes
-app.use('/', loginRoutes);
+app.use('/',(req,res)=>
+    res.redirect('views/login')
+);
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
 app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
 
-app.get('/', (req,res)=>{
-    res.send("bintang ganteng")
-})
 
 module.exports = app;
