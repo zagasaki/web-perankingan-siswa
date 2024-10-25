@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
     res.render('login', { errorMessage: null });
 });
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
