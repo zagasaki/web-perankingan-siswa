@@ -1,3 +1,4 @@
+// app.js
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -37,15 +38,14 @@ app.use(session({
 const siswaRoutes = require('./routes/siswa');
 const guruRoutes = require('./routes/guru');
 const adminRoutes = require('./routes/admin');
-
 const logoutRoutes = require('./routes/logout');
+const loginRoutes = require('./routes/login'); // Import route login
 
 // Use routes
-
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
 app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
-
+app.use('/', loginRoutes); // Atur route root mengarah ke login
 
 module.exports = app;

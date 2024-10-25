@@ -14,13 +14,13 @@ function redirectBasedOnRole(req, res) {
     }
 }
 router.get('/', (req, res) => {
-    // if (req.session.userId) {
-    //     return redirectBasedOnRole(req, res);
-    // }
+    if (req.session.userId) {
+        return redirectBasedOnRole(req, res);
+    }
     res.render('login', { errorMessage: null });
 });
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
     const { username, password } = req.body;
 
     try {
