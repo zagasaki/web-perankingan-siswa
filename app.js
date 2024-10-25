@@ -48,7 +48,7 @@ app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
 
 app.get('/', (req,res)=>{
-    res.send("bintang ganteng")
+    res.redirect('views/login')
 })
 
 module.exports = app;
