@@ -40,7 +40,7 @@ const adminRoutes = require('./routes/admin');
 const logoutRoutes = require('./routes/logout');
 
 // Use routes
-app.use('/', (req,res)=>
+app.get('/', (req,res)=>
     res.render('views/login'));
 app.use('/siswa', siswaRoutes);
 app.use('/guru', guruRoutes);
