@@ -13,7 +13,7 @@ function redirectBasedOnRole(req, res) {
         return res.status(400).send('Role tidak dikenali');
     }
 }
-router.get('/login', (req, res) => {
+router.get('/', (req, res) => {
     // if (req.session.userId) {
     //     return redirectBasedOnRole(req, res);
     // }
