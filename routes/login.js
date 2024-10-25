@@ -14,9 +14,9 @@ function redirectBasedOnRole(req, res) {
     }
 }
 router.get('/login', (req, res) => {
-    if (req.session.userId) {
-        return redirectBasedOnRole(req, res);
-    }
+    // if (req.session.userId) {
+    //     return redirectBasedOnRole(req, res);
+    // }
     res.render('login', { errorMessage: null });
 });
 
