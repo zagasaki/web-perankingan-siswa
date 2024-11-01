@@ -57,6 +57,32 @@
       .logout-btn:hover {
         background-color: darkred;
       }
+      .card {
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        width: 60%;
+      }
+      .ranking-title {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .class-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .class-table th,
+      .class-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .class-table th {
+        background-color: #f2f2f2;
+        color: #333;
+      }
     </style>
   </head>
   <body>
@@ -83,6 +109,29 @@
         </tr>
         <% }); %>
       </table>
+    </div>
+    <div class="card">
+      <div class="card">
+        <h2 class="ranking-title">PERINGKAT KELAS</h2>
+        <table class="class-table">
+          <thead>
+            <tr>
+              <th>Kelas</th>
+              <th>Nama Siswa</th>
+              <th>Peringkat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% students.forEach(function(student, index) { %>
+            <tr>
+              <td><%= student.kelas %></td>
+              <td><%= student.nama %></td>
+              <td><%= index + 1 %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

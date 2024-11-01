@@ -129,7 +129,7 @@
     <div class="dashboard-container">
       <!-- Left Card - Personal Ranking -->
       <div class="card">
-        <h2 class="ranking-title">PERINGKAT KAMU</h2>
+        <h2 class="ranking-title">NILAI KAMU</h2>
         <div class="your-rank"></div>
         <div class="scores-grid">
           <div class="score-item">
@@ -183,30 +183,6 @@
           </table>
         </div>
       </div> -->
-
-      <div class="card">
-        <div class="card">
-          <h2 class="ranking-title">PERINGKAT KELAS</h2>
-          <table class="class-table">
-            <thead>
-              <tr>
-                <th>Kelas</th>
-                <th>Nama Siswa</th>
-                <th>Peringkat</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% students.forEach(function(student, index) { %>
-              <tr>
-                <td><%= student.kelas %></td>
-                <td><%= student.nama %></td>
-                <td><%= index + 1 %></td>
-              </tr>
-              <% }); %>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </body>
 </html>
