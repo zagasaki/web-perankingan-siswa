@@ -39,7 +39,6 @@ router.put('/updateBobot', async (req, res) => {
   const { c1, c2, c3, c4, c5, c6 } = req.body;
 
   try {
-    // Find the single bobot entry and update the corresponding fields
     const update = await Bobot.findOneAndUpdate(
       {},
       { c1, c2, c3, c4, c5, c6 },
@@ -57,7 +56,74 @@ router.put('/updateBobot', async (req, res) => {
   }
 });
 
+router.get('/tambahsiswa', (req, res) => {
+  res.render('admin/addsiswa');
+});
 
+router.post('/add-siswa', async (req, res) => {
+  try {
+    const {
+      username, password, nama_lengkap, jenis_kelamin, agama, tempat_tanggal_lahir,
+      telepon, alamat, nis, anak_ke, nama_ayah, nama_ibu, pekerjaan_ayah,
+      pekerjaan_ibu, alamat_orang_tua, kelas
+    } = req.body;
+
+    const newSiswa = new User({
+      username,
+      password,
+      role: 'siswa',
+      nama_lengkap,
+      jenis_kelamin,
+      agama,
+      tempat_tanggal_lahir,
+      telepon,
+      alamat,
+      nis,
+      anak_ke,
+      nama_ayah,
+      nama_ibu,
+      pekerjaan_ayah,
+      pekerjaan_ibu,
+      alamat_orang_tua,
+      kelas
+    });
+
+    await newSiswa.save();
+    res.redirect('/admin/listSiswaGuru');
+  } catch (error) {
+    res.status(500).send("Terjadi kesalahan saat menambahkan data siswa");
+  }
+});
+
+
+router.get('/tambahguru', (req, res) => {
+  res.render('admin/addguru');
+});
+
+router.post('/add-guru', async (req, res) => {
+  try {
+    const { username, password, nama_lengkap, jenis_kelamin, agama, tempat_tanggal_lahir, telepon, alamat, nip, mata_pelajaran } = req.body;
+
+    const newGuru = new User({
+      username,
+      password,
+      role: 'guru',
+      nama_lengkap,
+      jenis_kelamin,
+      agama,
+      tempat_tanggal_lahir,
+      telepon,
+      alamat,
+      nip,
+      mata_pelajaran
+    });
+
+    await newGuru.save();
+    res.redirect('/admin/listSiswaGuru');
+  } catch (error) {
+    res.status(500).send("Terjadi kesalahan saat menambahkan data guru");
+  }
+});
 
   
   

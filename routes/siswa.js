@@ -6,7 +6,7 @@ const {
     normalizeScores, 
     calculateFinalScores, 
     rankStudents 
-} = require('../controllers/rankingController'); // Import ranking functions
+} = require('../controllers/rankingController'); 
 const Ranking = require('../models/Ranking');
 
 

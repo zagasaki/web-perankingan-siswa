@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Data Guru</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        padding: 20px;
+        margin: 0;
+        box-sizing: border-box;
+        min-height: 100vh;
+      }
+
+      .form-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto; /* Center the form horizontally */
+      }
+
+      h2 {
+        color: #0d47a1;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        color: #333;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #0d47a1;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .submit-btn:hover {
+        background-color: #1565c0;
+      }
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        appearance: none; /* Hapus tampilan default browser untuk konsistensi */
+        background-color: #ffffff;
+      }
+    </style>
+    <!-- Pastikan file CSS berada di /public/styles.css -->
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Tambah Data Guru</h2>
+      <form action="/admin/add-guru" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+
+        <label for="nama_lengkap">Nama Lengkap:</label>
+        <input type="text" id="nama_lengkap" name="nama_lengkap" required />
+
+        <label for="jenis_kelamin">Jenis Kelamin</label>
+        <select id="jenis_kelamin" name="jenis_kelamin" required>
+          <option value="">Pilih Jenis Kelamin</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+
+        <label for="agama">Agama:</label>
+        <input type="text" id="agama" name="agama" />
+
+        <label for="tempat_tanggal_lahir">Tempat, Tanggal Lahir:</label>
+        <input
+          type="text"
+          id="tempat_tanggal_lahir"
+          name="tempat_tanggal_lahir"
+        />
+
+        <label for="telepon">Telepon:</label>
+        <input type="text" id="telepon" name="telepon" />
+
+        <label for="alamat">Alamat:</label>
+        <input type="text" id="alamat" name="alamat" />
+
+        <label for="nip">NIP:</label>
+        <input type="text" id="nip" name="nip" required />
+
+        <label for="mata_pelajaran">Mata Pelajaran:</label>
+        <input type="text" id="mata_pelajaran" name="mata_pelajaran" required />
+
+        <button type="submit" class="submit-btn">Tambah Guru</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -3,6 +3,11 @@ const router = express.Router();
 const User = require('../models/User');
 const Ranking = require('../models/Ranking')
 const { isAuthenticated } = require('../middleware/auth');
+const { 
+    normalizeScores, 
+    calculateFinalScores, 
+    rankStudents 
+} = require('../controllers/rankingController'); 
 
 router.use(express.json());
 
@@ -10,7 +15,11 @@ router.get('/dashboard',async (req, res) => {
 
     try{
         const siswaList = await User.find({role:'siswa'});
-        res.render('guru/dashboard', { siswaList });
+        const students = await Ranking.find(); // Fetch data from Ranking model
+        const normalizedStudents = normalizeScores(students);
+        const studentsWithScores =await calculateFinalScores(normalizedStudents);
+        const rankedStudents = rankStudents(studentsWithScores);
+        res.render('guru/dashboard', { siswaList,students: rankedStudents });
     }catch (error){
         console.log(error);
         res.status(500).send('server error')
