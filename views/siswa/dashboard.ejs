@@ -130,7 +130,15 @@
       <!-- Left Card - Personal Ranking -->
       <div class="card">
         <h2 class="ranking-title">NILAI KAMU</h2>
-        <div class="your-rank"></div>
+        <div class="card">
+          <h2 class="ranking-title">PERINGKAT ANDA</h2>
+          <p class="your-rank">
+            Peringkat Anda:
+            <span class="rank-number"><%= studentRank %></span> dari
+            <span class="rank-total"><%= totalStudents %></span> siswa
+          </p>
+        </div>
+
         <div class="scores-grid">
           <div class="score-item">
             <div class="score-circle"><%= user.nilai_uts %></div>
@@ -158,31 +166,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Right Card - Class Ranking -->
-      <!-- <div class="card">
-        <div class="card">
-          <h2 class="ranking-title">PERINGKAT KELAS</h2>
-          <table class="class-table">
-            <thead>
-              <tr>
-                <th>Kelas</th>
-                <th>Nama Siswa</th>
-                <th>Peringkat</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% students.forEach(function(student, index) { %>
-              <tr>
-                <td><%= student.kelas %></td>
-                <td><%= student.nama %></td>
-                <td><%= index + 1 %></td>
-              </tr>
-              <% }); %>
-            </tbody>
-          </table>
-        </div>
-      </div> -->
     </div>
   </body>
 </html>

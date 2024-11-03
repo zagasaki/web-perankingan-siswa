@@ -24,8 +24,15 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
         const studentsWithScores =await calculateFinalScores(normalizedStudents);
         const rankedStudents = rankStudents(studentsWithScores);
 
-        // Render the dashboard view with user and ranked students
-        res.render('siswa/dashboard', { user, students: rankedStudents });
+        // Find the logged-in student's ranking in the ranked list
+        const loggedInStudent = rankedStudents.find(student => student._id.toString() === user._id.toString());
+
+        // If the logged-in student exists in the ranked list, set their rank and total students
+        const studentRank = loggedInStudent ? rankedStudents.indexOf(loggedInStudent) + 1 : null;
+        const totalStudents = rankedStudents.length;
+
+        // Render the dashboard view with user, ranking, and total students info
+        res.render('siswa/dashboard', { user, studentRank, totalStudents });
     } catch (error) {
         console.error('Error in /dashboard route:', error);
         res.status(500).send('Server error');
