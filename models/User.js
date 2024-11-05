@@ -32,6 +32,7 @@ const userSchema = new Schema({
   nilai_praktek: { type: Number, required: false,default:0 },
   nilai_absensi: { type: Number, required: false,default:0 },
   nilai_tugas: { type: Number, required: false,default:0 },
+  ranking: {type: String, required: false},
 
   // Guru-specific
   nip: { type: String, required: false },

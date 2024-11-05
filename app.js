@@ -48,9 +48,9 @@ app.use('/admin', adminRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/', loginRoutes); // Atur route root mengarah ke login
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+//   });
   
 
 module.exports = app;
